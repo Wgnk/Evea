@@ -95,7 +95,7 @@ void blink(int speed=12)
 }
  
  
-void sleep()
+/*void sleep()
 {
   left_eye_height = 2;
   right_eye_height = 2;
@@ -114,7 +114,7 @@ void wakeup()
   }
  
  
-}
+}*/
  
  
 void happy_eye()
@@ -302,7 +302,7 @@ void setup() {
   display.println(F(" "));
   display.display();
   delay(300);
-  sleep();
+  //sleep();
  
  
   // Draw a single pixel in white
@@ -320,8 +320,8 @@ void loop() {
    
  
  
-wakeup();
-delay(300);
+//wakeup();
+//delay(300);
    
 center_eyes(true);
 delay(300);
