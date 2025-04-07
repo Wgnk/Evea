@@ -126,7 +126,7 @@ void bluetooth()
   if (Serial.available() > 0) {
     value = Serial.read();
   }
-  if (value == 'F') {
+  if (value == 'U') {
    Motor1.setSpeed(130);  //define motor1 speed:
   Motor1.run(FORWARD);   //rotate motor1 clockwise:
   Motor2.setSpeed(130);  //define motor2 speed:
@@ -135,7 +135,7 @@ void bluetooth()
   Motor3.run(FORWARD);   //rotate motor3 clockwise:
   Motor4.setSpeed(130);  //define motor4 speed:
   Motor4.run(FORWARD);   //rotate motor4 clockwise:
-  } else if (value == 'B') {
+  } else if (value == 'D') {
     Motor1.setSpeed(130);  //define motor1 speed:
   Motor1.run(BACKWARD);   //rotate motor1 clockwise:
   Motor2.setSpeed(130);  //define motor2 speed:
@@ -164,7 +164,7 @@ void bluetooth()
   Motor4.setSpeed(150);  //define motor4 speed:
   Motor4.run(FORWARD);   //rotate motor4 clockwise:
   delay(150);
-  } else {
+  } else if(value == 'S') {
     Motor1.setSpeed(0);    //define motor1 speed:
   Motor1.run(RELEASE);   //stop motor1:
   Motor2.setSpeed(0);    //define motor2 speed:
