@@ -51,8 +51,9 @@ for(pos = 0; pos<=90; pos += 1) {       //goes from 180 degrees to 0 degrees:
 
 // the lope function runs forever
 void loop() {                                                                      //wait 50ms between pings:
-//bluetooth();
+bluetooth();
 human();
+voicecontrol();
 }
 void human()
 {
@@ -146,16 +147,6 @@ void bluetooth()
   Motor4.run(BACKWARD);   //rotate motor4 clockwise:
   } else if (value == 'L') {
     Motor1.setSpeed(150);  //define motor1 speed:
-  Motor1.run(FORWARD);   //rotate motor1 cloclwise:
-  Motor2.setSpeed(150);  //define motor2 speed:
-  Motor2.run(FORWARD);   //rotate motor2 clockwise:
-  Motor3.setSpeed(150);  //define motor3 speed:
-  Motor3.run(BACKWARD);  //rotate motor3 anticlockwise:
-  Motor4.setSpeed(150);  //define motor4 speed:
-  Motor4.run(BACKWARD);  //rotate motor4 anticlockwise:
-  delay(150);
-  } else if (value == 'R') {
-     Motor1.setSpeed(150);  //define motor1 speed:
   Motor1.run(BACKWARD);  //rotate motor1 anticlockwise:
   Motor2.setSpeed(150);  //define motor2 speed:
   Motor2.run(BACKWARD);  //rotate motor2 anticlockwise:
@@ -164,7 +155,17 @@ void bluetooth()
   Motor4.setSpeed(150);  //define motor4 speed:
   Motor4.run(FORWARD);   //rotate motor4 clockwise:
   delay(150);
-  } else if(value == 'S') {
+  } else if (value == 'R') {
+  Motor1.setSpeed(150);  //define motor1 speed:
+  Motor1.run(FORWARD);   //rotate motor1 cloclwise:
+  Motor2.setSpeed(150);  //define motor2 speed:
+  Motor2.run(FORWARD);   //rotate motor2 clockwise:
+  Motor3.setSpeed(150);  //define motor3 speed:
+  Motor3.run(BACKWARD);  //rotate motor3 anticlockwise:
+  Motor4.setSpeed(150);  //define motor4 speed:
+  Motor4.run(BACKWARD);  //rotate motor4 anticlockwise:
+  delay(150);
+  } else if(value=='S'){
     Motor1.setSpeed(0);    //define motor1 speed:
   Motor1.run(RELEASE);   //stop motor1:
   Motor2.setSpeed(0);    //define motor2 speed:
@@ -173,5 +174,59 @@ void bluetooth()
   Motor3.run(RELEASE);   //stop motor3:
   Motor4.setSpeed(0);    //define motor4 speed:
   Motor4.run(RELEASE);   
+  }
+}
+void voicecontrol(){
+  if (Serial.available() > 0) {
+    value = Serial.read();
+    Serial.println(value);
+    if (value == '^') {
+      Motor1.setSpeed(130);  //define motor1 speed:
+  Motor1.run(FORWARD);   //rotate motor1 clockwise:
+  Motor2.setSpeed(130);  //define motor2 speed:
+  Motor2.run(FORWARD);   //rotate motor2 clockwise:
+  Motor3.setSpeed(130);  //define motor3 speed:
+  Motor3.run(FORWARD);   //rotate motor3 clockwise:
+  Motor4.setSpeed(130);  //define motor4 speed:
+  Motor4.run(FORWARD); 
+    } else if (value == '-') {
+       Motor1.setSpeed(130);  //define motor1 speed:
+  Motor1.run(BACKWARD);   //rotate motor1 clockwise:
+  Motor2.setSpeed(130);  //define motor2 speed:
+  Motor2.run(BACKWARD);   //rotate motor2 clockwise:
+  Motor3.setSpeed(130);  //define motor3 speed:
+  Motor3.run(BACKWARD);   //rotate motor3 clockwise:
+  Motor4.setSpeed(130);  //define motor4 speed:
+  Motor4.run(BACKWARD);
+    } else if (value == '<') {
+      Motor1.setSpeed(150);  //define motor1 speed:
+  Motor1.run(BACKWARD);  //rotate motor1 anticlockwise:
+  Motor2.setSpeed(150);  //define motor2 speed:
+  Motor2.run(BACKWARD);  //rotate motor2 anticlockwise:
+  Motor3.setSpeed(150);  //define motor3 speed:
+  Motor3.run(FORWARD);   //rotate motor3 clockwise:
+  Motor4.setSpeed(150);  //define motor4 speed:
+  Motor4.run(FORWARD);   //rotate motor4 clockwise:
+  delay(150);
+    } else if (value == '>') {
+     Motor1.setSpeed(150);  //define motor1 speed:
+  Motor1.run(FORWARD);   //rotate motor1 cloclwise:
+  Motor2.setSpeed(150);  //define motor2 speed:
+  Motor2.run(FORWARD);   //rotate motor2 clockwise:
+  Motor3.setSpeed(150);  //define motor3 speed:
+  Motor3.run(BACKWARD);  //rotate motor3 anticlockwise:
+  Motor4.setSpeed(150);  //define motor4 speed:
+  Motor4.run(BACKWARD);  //rotate motor4 anticlockwise:
+  delay(150);
+    } else if (value == '*') {
+       Motor1.setSpeed(0);    //define motor1 speed:
+  Motor1.run(RELEASE);   //stop motor1:
+  Motor2.setSpeed(0);    //define motor2 speed:
+  Motor2.run(RELEASE);   //stop motor2:
+  Motor3.setSpeed(0);    //define motor3 speed:
+  Motor3.run(RELEASE);   //stop motor3:
+  Motor4.setSpeed(0);    //define motor4 speed:
+  Motor4.run(RELEASE);   
+    }
   }
 }
