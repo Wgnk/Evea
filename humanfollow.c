@@ -1,6 +1,12 @@
 #include<NewPing.h>           
 #include<Servo.h>             
-#include<AFMotor.h>           
+#include<AFMotor.h>  
+#include "DHT.h"
+#define DHTPIN A4     // Digital pin connected to the DHT sensor
+#define DHTTYPE DHT11   // DHT 11
+
+DHT dht(DHTPIN, DHTTYPE); //Initialize the DHT component
+
 #define RIGHT A3             // Right IR sensor connected to analog pin A2 of Arduino Uno:
 #define LEFT A2              // Left IR sensor connected to analog pin A3 of Arduino Uno:
 #define TRIGGER_PIN A1        // Trigger pin connected to analog pin A1 of Arduino Uno:
@@ -31,6 +37,10 @@ void setup() { // the setup function runs only once when power on the board or r
   Motor2.setSpeed(Speed);
   Motor3.setSpeed(Speed);
   Motor4.setSpeed(Speed);
+  Serial.println("DHTxx test!");
+
+  dht.begin();
+
 {
 for(pos = 90; pos <= 180; pos += 1){    // goes from 90 degrees to 180 degrees:
   myservo.write(pos);                   //tell servo to move according to the value of 'pos' variable:
@@ -54,22 +64,23 @@ void loop() {                                                                   
 bluetooth();
 human();
 voicecontrol();
+//temp();
 }
 void human()
 {
   delay(50);
 distance = sonar.ping_cm();                       //send ping, get distance in cm and store it in 'distance' variable:
-Serial.print("distance");                   
-Serial.println(distance);                         // print the distance in serial monitor:
+//Serial.print("distance");                   
+//Serial.println(distance);                         // print the distance in serial monitor:
 
 
     Right_Value = digitalRead(RIGHT);             // read the value from Right IR sensor:
     Left_Value = digitalRead(LEFT);               // read the value from Left IR sensor:
  
-Serial.print("RIGHT");                      
-Serial.println(Right_Value);                      // print the right IR sensor value in serial monitor:
-Serial.print("LEFT");                       
-Serial.println(Left_Value);                       //print the left IR sensor value in serial monitor:
+//Serial.print("RIGHT");                      
+//Serial.println(Right_Value);                      // print the right IR sensor value in serial monitor:
+//Serial.print("LEFT");                       
+//Serial.println(Left_Value);                       //print the left IR sensor value in serial monitor:
 
 if((distance > 1) && (distance < 15)){            //check wheather the ultrasonic sensor's value stays between 1 to 15.
                                                   //If the condition is 'true' then the statement below will execute:
@@ -94,7 +105,7 @@ if((distance > 1) && (distance < 15)){            //check wheather the ultrasoni
   Motor3.run(FORWARD);   //rotate motor3 clockwise:
   Motor4.setSpeed(150);  //define motor4 speed:
   Motor4.run(FORWARD);   //rotate motor4 clockwise:
-  delay(150);
+  
   
 }else if((Right_Value==1)&&(Left_Value==0)) {     //If the condition is 'true' then the statement below will execute:
   
@@ -107,7 +118,7 @@ if((distance > 1) && (distance < 15)){            //check wheather the ultrasoni
   Motor3.run(BACKWARD);  //rotate motor3 anticlockwise:
   Motor4.setSpeed(150);  //define motor4 speed:
   Motor4.run(BACKWARD);  //rotate motor4 anticlockwise:
-  delay(150);
+  
   
 }else if(distance > 15) {                          //If the condition is 'true' then the statement below will execute:
   
@@ -154,7 +165,6 @@ void bluetooth()
   Motor3.run(FORWARD);   //rotate motor3 clockwise:
   Motor4.setSpeed(150);  //define motor4 speed:
   Motor4.run(FORWARD);   //rotate motor4 clockwise:
-  delay(150);
   } else if (value == 'R') {
   Motor1.setSpeed(150);  //define motor1 speed:
   Motor1.run(FORWARD);   //rotate motor1 cloclwise:
@@ -164,7 +174,6 @@ void bluetooth()
   Motor3.run(BACKWARD);  //rotate motor3 anticlockwise:
   Motor4.setSpeed(150);  //define motor4 speed:
   Motor4.run(BACKWARD);  //rotate motor4 anticlockwise:
-  delay(150);
   } else if(value=='S'){
     Motor1.setSpeed(0);    //define motor1 speed:
   Motor1.run(RELEASE);   //stop motor1:
@@ -207,7 +216,6 @@ void voicecontrol(){
   Motor3.run(FORWARD);   //rotate motor3 clockwise:
   Motor4.setSpeed(150);  //define motor4 speed:
   Motor4.run(FORWARD);   //rotate motor4 clockwise:
-  delay(150);
     } else if (value == '>') {
      Motor1.setSpeed(150);  //define motor1 speed:
   Motor1.run(FORWARD);   //rotate motor1 cloclwise:
@@ -217,7 +225,6 @@ void voicecontrol(){
   Motor3.run(BACKWARD);  //rotate motor3 anticlockwise:
   Motor4.setSpeed(150);  //define motor4 speed:
   Motor4.run(BACKWARD);  //rotate motor4 anticlockwise:
-  delay(150);
     } else if (value == '*') {
        Motor1.setSpeed(0);    //define motor1 speed:
   Motor1.run(RELEASE);   //stop motor1:
@@ -229,4 +236,27 @@ void voicecontrol(){
   Motor4.run(RELEASE);   
     }
   }
+}
+void temp()
+{
+    // Wait a few seconds between measurements.
+
+  // Reading temperature or humidity takes about 250 milliseconds!
+  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
+  float h = dht.readHumidity();
+  // Read temperature as Celsius (the default)
+  float t = dht.readTemperature();
+  // Read temperature as Fahrenheit (isFahrenheit = true)
+  float f = dht.readTemperature(true);
+
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(h) || isnan(t) || isnan(f)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+
+  String message = (String) "Humidity: "+h+"%  Temperature: " +t+"°C";
+  Serial.println(message);
+  delay(2000);
+
 }
