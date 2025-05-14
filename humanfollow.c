@@ -255,8 +255,8 @@ void temp()
     return;
   }
 
-  String message = (String) "Humidity: "+h+"%  Temperature: " +t+"°C";
+  String message = (String) "Humidity: "+h+"%  Temperature: " +t+"*C";
   Serial.println(message);
-  delay(2000);
+  delay(4000);
 
 }
