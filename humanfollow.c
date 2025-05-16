@@ -1,10 +1,11 @@
 #include<NewPing.h>           
 #include<Servo.h>             
-#include<AFMotor.h>  
+#include<AFMotor.h> 
+#include<SoftwareSerial.h> 
 #include "DHT.h"
 #define DHTPIN A4     // Digital pin connected to the DHT sensor
 #define DHTTYPE DHT11   // DHT 11
-
+SoftwareSerial B(0,1);
 DHT dht(DHTPIN, DHTTYPE); //Initialize the DHT component
 
 #define RIGHT A3             // Right IR sensor connected to analog pin A2 of Arduino Uno:
@@ -38,7 +39,7 @@ void setup() { // the setup function runs only once when power on the board or r
   Motor3.setSpeed(Speed);
   Motor4.setSpeed(Speed);
   Serial.println("DHTxx test!");
-
+  B.begin(9600);
   dht.begin();
 
 {
@@ -250,13 +251,14 @@ void temp()
   float f = dht.readTemperature(true);
 
   // Check if any reads failed and exit early (to try again).
-  if (isnan(h) || isnan(t) || isnan(f)) {
-    Serial.println("Failed to read from DHT sensor!");
-    return;
-  }
-
-  String message = (String) "Humidity: "+h+"%  Temperature: " +t+"*C";
-  Serial.println(message);
-  delay(4000);
+  B.print(h);
+  B.print(",");
+  B.print(t);
+  B.print(" C");
+  B.print(",");
+  B.print(f);
+  B.print(" F");
+  B.print(";");
+  delay(20);
 
 }
