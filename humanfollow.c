@@ -38,7 +38,7 @@ void setup() { // the setup function runs only once when power on the board or r
   Motor2.setSpeed(Speed);
   Motor3.setSpeed(Speed);
   Motor4.setSpeed(Speed);
-  Serial.println("DHTxx test!");
+  Serial.println("DHT11 Temperature and Humidity Sensor");
   B.begin(9600);
   dht.begin();
 
@@ -240,25 +240,23 @@ void voicecontrol(){
 }
 void temp()
 {
-    // Wait a few seconds between measurements.
+   delay(2000); // Wait 2 seconds between readings
 
-  // Reading temperature or humidity takes about 250 milliseconds!
-  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-  float h = dht.readHumidity();
-  // Read temperature as Celsius (the default)
-  float t = dht.readTemperature();
-  // Read temperature as Fahrenheit (isFahrenheit = true)
-  float f = dht.readTemperature(true);
+  float humidity = dht.readHumidity();      // Read humidity
+  float temperature = dht.readTemperature(); // Read temperature in Celsius
 
-  // Check if any reads failed and exit early (to try again).
-  B.print(h);
-  B.print(",");
-  B.print(t);
-  B.print(" C");
-  B.print(",");
-  B.print(f);
-  B.print(" F");
-  B.print(";");
-  delay(20);
+  // Check if readings failed
+  if (isnan(humidity) || isnan(temperature)) {
+    Serial.println("Failed to read from DHT11 sensor!");
+    return;
+  }
 
+  // Print the results
+  Serial.print("Humidity: ");
+  Serial.print(humidity);
+  Serial.print(" %\t");
+
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println(" *C");
 }
