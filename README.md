@@ -1,4 +1,4 @@
-🚗🤖 Evea: The Human-Following Robot 🔥
+🚗🤖 Evea: The object-Following Robot 🔥
 
 Thrilled to share our recent Arduino-based robot project – Evea, developed as part of our diploma journey with a passionate and innovative team! This smart robotic car is designed to follow a human, and it's loaded with interactive and intelligent features! 🚶‍♂️➡️🤖
 
