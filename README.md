@@ -185,3 +185,4 @@ Interactive Robotics: Creating robots capable of responding to human commands.
 Indoor Automation: Exploring autonomous movement and object-following concepts.
 
 ## Note: Evea is an educational prototype. It is not intended to replace certified medical, security, or assistive devices.
+<img width="450" height="800" alt="image" src="https://github.com/user-attachments/assets/5426f892-5505-4e34-8a4f-8bf1a2706188" />
